@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <record id="currency_exchange_rate_wizard_form" model="ir.ui.view">
+            <field name="name">currency.exchange.rate.wizard.form</field>
+            <field name="model">currency.exchange.rate.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center mt16 mb8">
+                                <div class="card-header">
+                                    <label string="Give an amount" for="amount_in"/>
+                                    <field name="amount_in"/>
+                                    <label string="Currency" for="currency_from"/>
+                                    <field name="currency_from" placeholder="Select Currency"
+                                           options='{"no_open": True, "no_create": True}'
+                                           domain="['|',('active','=',True),('active','=',False)]"/> To
+                                    <field name="currency_to" placeholder="Select Currency"
+                                           options='{"no_open": True, "no_create": True}'
+                                           domain="['|',('active','=',True),('active','=',False)]"/>
+                                    <field name="show_res" invisible="1" />
+                                </div>
+                                <div class="card-header" attrs="{'invisible': [('show_res', '=', False)]}">
+                                    <label string="Current Rate" for="current_rate"/>
+                                    <field name="current_rate" readonly="1"/>,
+                                    <label string="Conversion Amount" for="amount_converted"/>
+                                    <field name="amount_converted" readonly="1"/>
+                                </div>
+                                <div class="card-header">
+                                    <div class="btn-group">
+                                        <button name="action_convert" type="object" string="Convert" icon="fa-retweet"
+                                                class="btn btn-primary" style="width: 250px; margin : 10px;"/>
+                                        <button name="action_switch" type="object" string="Switch" icon="fa-refresh"
+                                                class="btn btn-info" style="width: 250px; margin : 10px;"/>
+                                        <button name="action_refresh" type="object" string="Clear" icon="fa-rotate-left"
+                                                class="btn btn-danger" style="width: 250px; margin : 10px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Action View-->
+        <record id="action_currency_exchange_rate_wizard" model="ir.actions.act_window">
+            <field name="name">Currency Exchange Rate</field>
+            <field name="res_model">currency.exchange.rate.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem
+                name="Currency Exchange Rate"
+                id="menu_currency_exchange_rate"
+                parent="base.menu_custom"
+                action="action_currency_exchange_rate_wizard"
+                sequence="101"
+        />
+    </data>
+</odoo>
